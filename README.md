@@ -7,6 +7,7 @@ A real-time device monitoring dashboard using the MERN stack with MySQL, demonst
 - [x] Backend: Setup Express server
 - [ ] Backend: Connect MySQL and create `recordings` table
 - [ ] Backend: Serve audio files from `recordings/` folder
+- [x] Backend: setup WebSocket 
 - [ ] Backend: WebSocket server for live updates
 - [x] Frontend: React app setup with Vite
 - [ ] Frontend: Dashboard page with 20 device cards

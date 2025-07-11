@@ -1,26 +1,39 @@
-// Entry point for the backend server
 const express = require("express");
-const morgan =require("morgan");
 const cors = require("cors");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
+const http = require("http");
+const { Server } = require("socket.io");
+const path = require("path");
 
-// Load environment variables from .env file
 dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middleware
+app.use(cors());
 app.use(express.json());
-app.use(morgan("dev")); // Logging middleware
-app.use(cors()); // Enable CORS for all routes
+app.use(morgan("dev"));
 
-// Basic route
+app.use("/recordings", express.static(path.join(__dirname, "recordings")));
+
 app.get("/", (req, res) => {
-  res.send("Server is running!");
+  res.send("Live Device Monitoring API");
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+// Import and use routes here
+
+
+// WebSocket setup
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+// WebSocket logic
+require("./socket/deviceSocket")(io);
+
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
