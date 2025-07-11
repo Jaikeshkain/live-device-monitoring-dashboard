@@ -10,8 +10,8 @@ A real-time device monitoring dashboard using the MERN stack with MySQL, demonst
 - [x] Backend: setup WebSocket 
 - [x] Backend: WebSocket server for live updates
 - [x] Frontend: React app setup with Vite
-- [ ] Frontend: Dashboard page with 20 device cards
-- [ ] Frontend: CSS-only pagination (8 devices per page)
+- [x] Frontend: Dashboard page with 20 device cards
+- [x] Frontend: CSS-only pagination (8 devices per page)
 - [ ] Frontend: WebSocket client to receive live status
 - [ ] Frontend: Recordings page with filters and audio player
 - [ ] Testing and final polish
