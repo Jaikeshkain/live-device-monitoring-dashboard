@@ -20,7 +20,8 @@ app.get("/", (req, res) => {
 });
 
 // Import and use routes here
-
+const recordingsRoutes = require("./routes/recordings");
+app.use("/api/recordings", recordingsRoutes);
 
 // WebSocket setup
 const server = http.createServer(app);
