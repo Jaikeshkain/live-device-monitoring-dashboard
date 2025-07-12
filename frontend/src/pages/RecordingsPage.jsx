@@ -36,7 +36,8 @@ export default function RecordingsPage() {
       }
   
       const res = await axios.get(url);
-      setRecordings(res.data || []);
+      setRecordings(Array.isArray(res.data) ? res.data : res.data.data || []);
+
     } catch (err) {
       console.error("Error fetching recordings", err);
       setRecordings([]);
@@ -49,11 +50,10 @@ export default function RecordingsPage() {
   useEffect(() => {
     fetchRecordings();
   }, []);
-  
-
-  console.log("Recordings:", recordings);
 
   const applyFilters = (data) => {
+    if (!Array.isArray(data)) return [];
+
     return data.filter((rec) => {
       const matchLine = filters.line ? rec.line == filters.line : true;
       const matchInOut = filters.in_out ? rec.in_out === filters.in_out : true;
