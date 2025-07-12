@@ -14,4 +14,4 @@ A real-time device monitoring dashboard using the MERN stack with MySQL, demonst
 - [x] Frontend: CSS-only pagination (8 devices per page)
 - [x] Frontend: WebSocket client to receive live status
 - [x] Frontend: Recordings page with filters and audio player
-- [ ] Testing and final polish
+- [x] Testing and final polish
