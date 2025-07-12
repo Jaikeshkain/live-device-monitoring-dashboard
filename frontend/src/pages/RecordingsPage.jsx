@@ -8,7 +8,7 @@ export default function RecordingsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [recordings, setRecordings] = useState([]);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -18,12 +18,24 @@ export default function RecordingsPage() {
     maxDuration: "",
   });
 
+  const handleDateChange = (selectedDate) => {
+    setDate(selectedDate);
+    // Fetch recordings for selected date
+    setTimeout(fetchRecordings, 0); // defer to let `date` update
+  };
+  
 
   const fetchRecordings = async () => {
     try {
       setLoading(true);
-      const formatted = date.toISOString().split("T")[0];
-      const res = await axios.get(`http://localhost:5000/api/recordings?deviceId=${id}&date=${formatted}`);
+  
+      let url = `http://localhost:5000/api/recordings?deviceId=${id}`;
+      if (date) {
+        const formatted = date.toISOString().split("T")[0];
+        url += `&date=${formatted}`;
+      }
+  
+      const res = await axios.get(url);
       setRecordings(res.data || []);
     } catch (err) {
       console.error("Error fetching recordings", err);
@@ -32,10 +44,14 @@ export default function RecordingsPage() {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchRecordings();
-  }, [date]);
+  }, []);
+  
+
+  console.log("Recordings:", recordings);
 
   const applyFilters = (data) => {
     return data.filter((rec) => {
@@ -67,12 +83,15 @@ export default function RecordingsPage() {
           ← Back
         </button>
         <div className="flex items-center space-x-2">
-          <DatePicker
-            selected={date}
-            onChange={(d) => setDate(d)}
-            dateFormat="yyyy-MM-dd"
-            className="border rounded px-2 py-1"
-          />
+        <DatePicker
+          selected={date}
+          onChange={handleDateChange}
+          dateFormat="yyyy-MM-dd"
+          className="border rounded px-2 py-1"
+          isClearable
+          placeholderText="Filter by date"
+        />
+
           <button onClick={fetchRecordings} className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
             SYNC
           </button>

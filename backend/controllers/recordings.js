@@ -4,10 +4,19 @@ exports.getRecordings = async (req, res) => {
   const { deviceId, date } = req.query;
 
   try {
-    const [rows] = await pool.execute(
-      "SELECT * FROM recordings WHERE device_id = ? AND DATE(date_time) = ?",
-      [deviceId, date]
-    );
+    let rows;
+
+    if (date) {
+      [rows] = await pool.execute(
+        "SELECT * FROM recordings WHERE device_id = ? AND DATE(date_time) = ?",
+        [deviceId, date]
+      );
+    } else {
+      [rows] = await pool.execute(
+        "SELECT * FROM recordings WHERE device_id = ?",
+        [deviceId]
+      );
+    }
 
     res.json(rows);
   } catch (err) {
