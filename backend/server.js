@@ -27,7 +27,8 @@ app.use("/api/recordings", recordingsRoutes);
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: process.env.frontendUrl || "http://localhost:5173",
+    methods: ["GET", "POST"],
   },
 });
 
