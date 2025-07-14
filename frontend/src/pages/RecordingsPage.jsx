@@ -28,8 +28,8 @@ export default function RecordingsPage() {
   const fetchRecordings = async () => {
     try {
       setLoading(true);
-  
-      let url = `http://localhost:5000/api/recordings?deviceId=${id}`;
+
+      let url = `${import.meta.env.VITE_API_BASE_URL}/api/recordings?deviceId=${id}`;
       if (date) {
         const formatted = date.toISOString().split("T")[0];
         url += `&date=${formatted}`;
@@ -201,7 +201,7 @@ export default function RecordingsPage() {
                   <td className="px-4 py-2">{rec.comment || "-"}</td>
                   <td className="px-4 py-2">
                     <audio controls className="w-32">
-                      <source src={`http://localhost:5000/recordings/${rec.file_name}`} type="audio/mpeg" />
+                      <source src={`${import.meta.env.VITE_API_BASE_URL}/recordings/${rec.file_name}`} type="audio/mpeg" />
                     </audio>
                   </td>
                 </tr>
