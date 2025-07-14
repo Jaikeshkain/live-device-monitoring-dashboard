@@ -8,12 +8,12 @@ exports.getRecordings = async (req, res) => {
 
     if (date) {
       [rows] = await pool.execute(
-        "SELECT * FROM recordings WHERE device_id = ? AND DATE(date_time) = ?",
+        "SELECT * FROM device_monitor.recordings WHERE device_id = ? AND DATE(date_time) = ?",
         [deviceId, date]
       );
     } else {
       [rows] = await pool.execute(
-        "SELECT * FROM recordings WHERE device_id = ?",
+        "SELECT * FROM device_monitor.recordings WHERE device_id = ?",
         [deviceId]
       );
     }
